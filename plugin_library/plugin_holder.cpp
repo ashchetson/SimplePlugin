@@ -6,7 +6,7 @@
 
 #define GET_FUNCTION_POINTER(lib_handle, name) reinterpret_cast<decltype(name)*>(dlsym(lib_handle, #name))
 
-PluginHolder::PluginHolder(const std::string& lib_path)
+PluginHolder::PluginHolder(const fs::path& lib_path)
   : m_lib_handle{load_lib(lib_path)}
   , m_impl{create_impl()} {
 }
@@ -15,8 +15,8 @@ void PluginHolder::make_a_noise() {
   m_impl->make_a_noise();
 }
 
-std::shared_ptr<void> PluginHolder::load_lib(const std::string& lib_path) {
-  auto handle = dlopen(lib_path.data(), RTLD_NOW);
+std::shared_ptr<void> PluginHolder::load_lib(const fs::path& lib_path) {
+  auto handle = dlopen(lib_path.c_str(), RTLD_NOW);
     
   if (!handle) {
     throw std::runtime_error(dlerror());
