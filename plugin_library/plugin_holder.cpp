@@ -32,7 +32,13 @@ std::unique_ptr<GameCharacter> PluginHolder::create_impl() {
     throw std::runtime_error(dlerror());
   }
 
-  return create_plugin();
+  auto res = create_plugin();
+
+  if (!res) {
+    throw std::runtime_error("function create returned nullptr");
+  }
+
+  return res;
 }
 
 #undef GET_FUNCTION_POINTER

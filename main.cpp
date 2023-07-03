@@ -19,7 +19,7 @@ int main() {
         holders.emplace(path.c_str(), path);
       }
       catch (std::exception& e) {
-        std::cout << e.what() << std::endl;
+        std::cout << path << " returned " << e.what() << std::endl;
       }
     }
   }
